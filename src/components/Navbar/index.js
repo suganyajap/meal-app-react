@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Navbar,Container,Nav} from "react-bootstrap";
-
+import {LinkContainer} from 'react-router-bootstrap';
+import { MyContext } from '../../Context';
 function AppNavbar() {
+  const {user}=useContext(MyContext);
   return (
     <Navbar bg="primary" expand="lg">
   <Container>
-    <Navbar.Brand href="#home">Meals</Navbar.Brand>
+    <LinkContainer to="/">
+    <Navbar.Brand >Meals</Navbar.Brand>
+    </LinkContainer>
+    
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
+      {!user && (
       <Nav className="me-auto">
-        <Nav.Link href="#home">Home</Nav.Link>
-        <Nav.Link href="#link">Login</Nav.Link>
         
-      </Nav>
+        <LinkContainer to="/login">
+        <Nav.Link >Login</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/signup">
+        <Nav.Link >Signup</Nav.Link>
+        </LinkContainer>
+        
+       </Nav>
+       )}
     </Navbar.Collapse>
   </Container>
 </Navbar>

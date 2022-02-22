@@ -1,0 +1,8 @@
+.not-found-container{
+    text-align: center;
+  color: teal;
+}
+.not-found-image{
+    width: 100%;
+    object-fit: cover;
+  }

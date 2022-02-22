@@ -1,10 +1,11 @@
 import React from 'react'
 import MyHeader from '../../components/Header'
-import { useEffect,useState } from 'react';
+import { useEffect,useContext } from 'react';
 import axios from 'axios';
 import MealsContainer from '../../components/MealsContainer';
+import { MyContext } from '../../Context';
 function Home() {
-    const [meals,setMeals]=useState([]);
+   const {meals,setMeals}=useContext(MyContext);
     useEffect(()=>{
         axios.get("https://www.themealdb.com/api/json/v1/1/search.php?f=a")
         .then(({data})=>setMeals(data.meals))
