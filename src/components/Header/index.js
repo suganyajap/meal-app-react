@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useState ,useContext} from 'react'
 import { Button,InputGroup,FormControl } from 'react-bootstrap';
 import { MyContext } from '../../Context';
@@ -7,8 +7,9 @@ function MyHeader() {
   const [searchInput,setSearchInput]=useState(""); 
   const {setMeals}=useContext(MyContext);
   function handleSearch(){
-    axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`)
-    .then(({data})=>setMeals(data.meals))
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`)
+    .then((res)=>res.json())
+    .then((data)=>setMeals(data.meals))
   }
   return (
     <div className='my-header'>

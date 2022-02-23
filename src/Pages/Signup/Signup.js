@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
 import {Form,Button} from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../Axios';
 import { MyContext } from '../../Context';
+import {useHistory} from 'react-router-dom';
 
 function Signup() {
+  const history=useHistory();
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const {setUser}=useContext(MyContext);
@@ -12,8 +14,11 @@ function Signup() {
   if(!email || !password){
     return alert('Please fill out fields')
   }
-  axios.post('http://localhost:9000/users',{email,password})
-  .then(({data})=>setUser(data))
+  axios.post('/users',{email,password})
+  .then(({data})=>{setUser(data);
+    localStorage.setItem('token',data.token)
+    history.replace("/");
+  })
   .catch((error)=>console.log(error));
  }
   return (

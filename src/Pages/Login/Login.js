@@ -1,9 +1,11 @@
-import axios from 'axios';
+import axios from '../../Axios';
 import React, { useContext, useState } from 'react';
 import {Form,Button} from 'react-bootstrap';
 import { MyContext } from '../../Context';
+import {useHistory} from 'react-router-dom';
 
 function Login() {
+  const history=useHistory();
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
   const {setUser}=useContext(MyContext);
@@ -12,8 +14,12 @@ function Login() {
    if(!email || !password){
      return alert('Please fill out fields')
    }
-   axios.post('http://localhost:9000/login',{email,password})
-   .then(({data})=>setUser(data))
+   axios.post('/login',{email,password})
+   .then(({data})=>{
+    localStorage.setItem('token',data.token)
+     setUser(data)
+     history.replace("/");
+  })
    .catch((error)=>console.log(error));
   }
   return (

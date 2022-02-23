@@ -2,10 +2,21 @@ import React, { useContext } from 'react';
 import {Navbar,Container,Nav} from "react-bootstrap";
 import {LinkContainer} from 'react-router-bootstrap';
 import { MyContext } from '../../Context';
+import  axios  from '../../Axios';
+import {useHistory} from 'react-router-dom';
 function AppNavbar() {
-  const {user}=useContext(MyContext);
+  const history=useHistory();
+  const {user,setUser}=useContext(MyContext);
+  const handleLogout=()=>{
+    axios.post("/logout")
+    .then(()=>{
+      localStorage.removeItem("token");
+      setUser(null);
+      history.replace("/");
+    });
+  }
   return (
-    <Navbar bg="primary" expand="lg">
+    <Navbar bg="light" expand="lg">
   <Container>
     <LinkContainer to="/">
     <Navbar.Brand >Meals</Navbar.Brand>
@@ -24,6 +35,14 @@ function AppNavbar() {
         </LinkContainer>
         
        </Nav>
+       )}
+       { user && (
+         <>
+          <LinkContainer to="/my-favorites">
+        <Nav.Link >Favorites</Nav.Link>
+        </LinkContainer>
+         <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+         </>
        )}
     </Navbar.Collapse>
   </Container>
